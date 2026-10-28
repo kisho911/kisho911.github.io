@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kisho &amp; Ruxi Workshop</title>
+<meta name="description" content="Apps, tools and websites made by Kisho and Ruxi in Astoria, NY. Sign up to test our apps.">
+<meta property="og:title" content="Kisho &amp; Ruxi Workshop">
+<meta property="og:description" content="Apps, tools and websites we make together. Join the tester list.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Figtree:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%A8%3C/text%3E%3C/svg%3E">
+<style>
+/* Layout: shop-sign header, two grids of project tickets (apps, websites), then the tester sign-up form. */
+:root{
+  --bg:#fff4f7; --surface:#ffffff; --ink:#4a1430; --muted:#8a5a72; --line:#f2c6d6;
+  --rose:#e8467c; --mint:#9fe3c9; --lemon:#ffe98f; --lilac:#d7c7ff; --sky:#c8d4ff; --blush:#ffc4d8;
+  --on-chip:#4a1430; --field:#fff9fb;
+  --display:"Shrikhand", Georgia, serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"Space Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#22101b; --surface:#2e1625; --ink:#ffe3ec; --muted:#c9a0b4; --line:#4d2a3d; --field:#26121f; color-scheme:dark }
+}
+:root[data-theme="dark"]{ --bg:#22101b; --surface:#2e1625; --ink:#ffe3ec; --muted:#c9a0b4; --line:#4d2a3d; --field:#26121f; color-scheme:dark }
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 var(--body)}
+.wrap{max-width:960px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px)); padding-block:44px 64px}
+header{display:flex; flex-direction:column; gap:12px; margin-bottom:40px}
+.kicker{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.14em; color:var(--rose)}
+h1{font-family:var(--display); font-weight:400; font-size:clamp(40px,10vw,68px); line-height:1.02; margin:0; text-wrap:balance}
+h1 .amp{color:var(--rose)}
+.lede{max-width:54ch; color:var(--muted); font-size:18px; margin:0}
+.cta{align-self:flex-start; margin-top:6px; text-decoration:none; background:var(--rose); color:#fff; font-weight:800; border:2px solid var(--ink); border-radius:999px; padding:12px 22px; box-shadow:0 4px 0 var(--ink)}
+.cta:active{transform:translateY(3px); box-shadow:0 1px 0 var(--ink)}
+section+section{margin-top:48px}
+.sectionlabel{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.14em; color:var(--rose); margin:0 0 14px}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:18px}
+.ticket{background:var(--surface); border:2px solid var(--ink); border-radius:20px; padding:22px; display:flex; flex-direction:column; gap:10px; min-width:0; box-shadow:0 4px 0 var(--ink)}
+.swatch{width:44px; height:44px; border-radius:14px; border:2px solid var(--ink); display:grid; place-items:center; font-size:22px; color:var(--on-chip)}
+.ticket h2{margin:0; font-size:22px; font-weight:800; letter-spacing:-.01em}
+.ticket p{margin:0; color:var(--muted)}
+.ticket a.go{color:var(--rose); font-weight:800; text-decoration:none; align-self:flex-start}
+.ticket a.go:hover{text-decoration:underline}
+.tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; padding-top:8px}
+.tag{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; padding:4px 9px; border-radius:999px; border:1.5px solid var(--ink)}
+.tag.s-dev{background:var(--lemon); color:var(--on-chip)}
+.tag.s-proto{background:var(--lilac); color:var(--on-chip)}
+.tag.s-live{background:var(--mint); color:var(--on-chip)}
+.tag.s-secret{background:var(--ink); color:var(--bg)}
+.ticket.secret{background-image:repeating-linear-gradient(-45deg, transparent 0 14px, color-mix(in srgb, var(--rose) 7%, transparent) 14px 28px)}
+.redact{color:var(--ink); letter-spacing:-1px; user-select:none}
+
+/* tester form */
+.signup{background:var(--surface); border:2px solid var(--ink); border-radius:24px; padding:26px; box-shadow:0 4px 0 var(--ink); display:grid; grid-template-columns:1fr 1.2fr; gap:28px}
+.signup h2{font-family:var(--display); font-weight:400; font-size:clamp(28px,6vw,38px); line-height:1.08; margin:0 0 10px; text-wrap:balance}
+.signup .about p{margin:0 0 10px; color:var(--muted)}
+.signup .about p:last-child{margin:0}
+form{display:flex; flex-direction:column; gap:14px; min-width:0}
+label.f{display:flex; flex-direction:column; gap:6px; font-weight:600; font-size:15px}
+label.f small{font-weight:400; color:var(--muted)}
+input[type=text],input[type=email]{font:16px var(--body); padding:12px 14px; border-radius:12px; border:2px solid var(--ink); background:var(--field); color:var(--ink); width:100%}
+input:focus-visible,.pick input:focus-visible+span,button:focus-visible,a:focus-visible{outline:3px solid var(--rose); outline-offset:2px}
+fieldset{border:0; padding:0; margin:0; display:flex; flex-direction:column; gap:8px}
+legend{font-weight:600; font-size:15px; margin-bottom:8px; padding:0}
+.picks{display:flex; flex-wrap:wrap; gap:8px}
+.pick{position:relative}
+.pick input{position:absolute; opacity:0; inset:0; margin:0; cursor:pointer}
+.pick span{display:inline-block; padding:9px 16px; border-radius:999px; border:2px solid var(--ink); font-weight:700; background:var(--field)}
+.pick input:checked+span{background:var(--rose); color:#fff}
+.submit{font:800 17px/1 var(--body); background:var(--ink); color:var(--bg); border:2px solid var(--ink); border-radius:999px; padding:15px 24px; cursor:pointer; align-self:flex-start}
+.submit[disabled]{opacity:.6; cursor:wait}
+.msg{margin:0; font-weight:600; min-height:1.5em}
+.msg.ok{color:var(--rose)}
+.msg.err{color:#b4233c}
+.hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
+@media (max-width:720px){ .signup{grid-template-columns:1fr; gap:18px; padding:22px} }
+
+footer{margin-top:56px; padding-top:20px; border-top:2px dashed var(--line); color:var(--muted); font-size:14px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="kicker">Made in Astoria, NY</span>
+    <h1>Kisho <span class="amp">&amp;</span> Ruxi Workshop</h1>
+    <p class="lede">Apps, tools and little websites we make together. Some are still cooking. Want to try them before anyone else? Get on the tester list.</p>
+    <a class="cta" href="#testers">Become a tester</a>
+  </header>
+
+  <section>
+    <p class="sectionlabel">Android apps</p>
+    <div class="grid">
+      <article class="ticket">
+        <div class="swatch" style="background:var(--lilac)">✦</div>
+        <h2>AstroChart</h2>
+        <p>Natal chart calculator. Put in a birth date, time and place and get the full wheel, made in our own style.</p>
+        <a class="go" href="#testers" data-app="AstroChart">Test it early →</a>
+        <div class="tags"><span class="tag">Android</span><span class="tag s-dev">In development</span></div>
+      </article>
+      <article class="ticket">
+        <div class="swatch" style="background:var(--mint)">⛨</div>
+        <h2>PrivateLink</h2>
+        <p>Ruxi's idea. Open links people send you in a sealed-off window, so they don't mess with your feed or algorithm.</p>
+        <a class="go" href="#testers" data-app="PrivateLink">Test it early →</a>
+        <div class="tags"><span class="tag">Android</span><span class="tag s-proto">Prototype</span></div>
+      </article>
+      <article class="ticket">
+        <div class="swatch" style="background:var(--sky)">☾</div>
+        <h2>Vessel</h2>
+        <p>A memory and journaling app where entries become stars in your own nebula. Works fully offline, no account.</p>
+        <a class="go" href="#testers" data-app="Vessel">Test it early →</a>
+        <div class="tags"><span class="tag">Android</span><span class="tag s-proto">Prototype</span></div>
+      </article>
+      <article class="ticket secret">
+        <div class="swatch" style="background:var(--ink); color:var(--bg)">?</div>
+        <h2>PixelGift</h2>
+        <p>Something you can give to someone you love. <span class="redact">██████ ███████ ████</span> <span class="redact">███ ██████</span>. That's all we can say.</p>
+        <div class="tags"><span class="tag s-secret">Top secret</span><span class="tag">Coming soon</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <p class="sectionlabel">Websites</p>
+    <div class="grid">
+      <article class="ticket">
+        <div class="swatch" style="background:var(--blush)">☕</div>
+        <h2>OnlyChismosas</h2>
+        <p>Anonymous chisme in English and Spanish. Spill it, vote it up with tea cups.</p>
+        <a class="go" href="https://onlychismosas.com" target="_blank" rel="noopener">onlychismosas.com →</a>
+        <div class="tags"><span class="tag">Web</span><span class="tag">EN / ES</span><span class="tag s-live">Live</span></div>
+      </article>
+      <article class="ticket">
+        <div class="swatch" style="background:#ffd9a8">♀</div>
+        <h2>Venus and the Rose</h2>
+        <p>Ruxi's home for psychic readings and esoteric content.</p>
+        <a class="go" href="https://venusandtherose.com" target="_blank" rel="noopener">venusandtherose.com →</a>
+        <div class="tags"><span class="tag">Web</span><span class="tag s-live">Live</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="testers">
+    <div class="signup">
+      <div class="about">
+        <h2>Join the tester list</h2>
+        <p>Pick the apps you want to try. When a test build is ready, we'll email you an invite to download it from Google Play.</p>
+        <p>Use the Google account email that's signed in on your Android phone, or Play won't let you in.</p>
+        <p>We only use your email for test invites.</p>
+      </div>
+      <form id="signup" novalidate>
+        <label class="f" for="name">First name <small>optional</small>
+          <input type="text" id="name" name="name" maxlength="80" autocomplete="given-name" placeholder="Maria">
+        </label>
+        <label class="f" for="email">Google account email
+          <input type="email" id="email" name="email" maxlength="200" autocomplete="email" placeholder="you@gmail.com" required>
+        </label>
+        <fieldset>
+          <legend>Which apps?</legend>
+          <div class="picks">
+            <label class="pick"><input type="checkbox" id="app-astrochart" name="apps" value="AstroChart"><span>AstroChart</span></label>
+            <label class="pick"><input type="checkbox" id="app-privatelink" name="apps" value="PrivateLink"><span>PrivateLink</span></label>
+            <label class="pick"><input type="checkbox" id="app-vessel" name="apps" value="Vessel"><span>Vessel</span></label>
+          </div>
+        </fieldset>
+        <label class="f" for="device">Phone model <small>optional, helps us test</small>
+          <input type="text" id="device" name="device" maxlength="40" placeholder="Pixel 8, Galaxy S24…">
+        </label>
+        <div class="hp" aria-hidden="true"><label for="website">Website</label><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
+        <button class="submit" type="submit" id="submit">Sign me up</button>
+        <p class="msg" id="msg" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <span>Kisho &amp; Ruxi, Astoria NY</span>
+    <span>© <span id="yr"></span></span>
+  </footer>
+</div>
+
+<script src="config.js"></script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// "Test it early" links pre-check that app
+document.querySelectorAll('a[data-app]').forEach(a => a.addEventListener('click', () => {
+  const box = document.querySelector(`input[name=apps][value="${a.dataset.app}"]`);
+  if (box) box.checked = true;
+}));
+
+const form = document.getElementById('signup'), msg = document.getElementById('msg'), btn = document.getElementById('submit');
+const say = (t, cls) => { msg.textContent = t; msg.className = 'msg ' + (cls || ''); };
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (form.website.value) { say("You're on the list. Thank you!", 'ok'); return; } // bot trap
+  const email = form.email.value.trim().toLowerCase();
+  const apps = [...form.querySelectorAll('input[name=apps]:checked')].map(b => b.value);
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { say('Check your email address, it looks incomplete.', 'err'); form.email.focus(); return; }
+  if (!apps.length) { say('Pick at least one app to test.', 'err'); return; }
+  const cfg = window.WS_CONFIG || {};
+  btn.disabled = true; btn.textContent = 'Signing you up…'; say('');
+  try {
+    const res = await fetch(cfg.SUPABASE_URL + '/rest/v1/testers', {
+      method: 'POST',
+      headers: { 'apikey': cfg.SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + cfg.SUPABASE_ANON_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ email, apps, name: form.name.value.trim() || null, device: form.device.value.trim() || null })
+    });
+    if (res.ok) { form.reset(); say("You're on the list! Watch your email for an invite. 💌", 'ok'); }
+    else if (res.status === 409) { say("You're already on the list with that email.", 'ok'); }
+    else { say("Sign-up didn't go through. Try again in a minute.", 'err'); }
+  } catch (err) {
+    say("Couldn't reach the sign-up list. Check your connection and try again.", 'err');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Sign me up';
+  }
+});
+</script>
+</body>
+</html>

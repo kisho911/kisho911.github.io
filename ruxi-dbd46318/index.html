@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>For Ruxi</title>
+<meta name="description" content="A very serious questionnaire.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Figtree:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%8C%3C/text%3E%3C/svg%3E">
+<style>
+/* Layout: one card on a rose field. Each question shows a PixelGift sprite with a candy-heart sticker, then Yes / a runaway No. */
+:root{
+  --field:#ffe3ec; --field-2:#ffd0df; --ink:#4a1430; --rose:#e8467c; --rose-deep:#c22a5f;
+  --card:#fff7fa;
+  --display:"Shrikhand", Georgia, serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"Space Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:var(--body); color:var(--ink);
+  background:
+    radial-gradient(circle at 15% 20%, var(--field-2) 0 12%, transparent 13%),
+    radial-gradient(circle at 85% 75%, var(--field-2) 0 10%, transparent 11%),
+    var(--field);
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+  padding-block:max(20px, env(safe-area-inset-top,0px)) 20px;
+  display:flex; justify-content:center;
+  overflow-x:hidden; min-height:100%;
+}
+.card{margin-block:auto}
+#hearts{position:fixed; inset:0; pointer-events:none; z-index:0}
+.card{
+  position:relative; z-index:1; width:100%; max-width:480px;
+  background:var(--card); border-radius:28px; padding:28px 24px 26px;
+  box-shadow:0 2px 0 var(--rose-deep), 0 18px 40px -18px rgba(194,42,95,.45);
+  border:2px solid var(--ink);
+  text-align:center; display:flex; flex-direction:column; gap:16px;
+}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--rose-deep)}
+h1{font-family:var(--display); font-weight:400; font-size:clamp(28px,7.5vw,40px); line-height:1.12; margin:0; text-wrap:balance}
+.stage{position:relative; height:220px; display:flex; align-items:flex-end; justify-content:center; gap:4px}
+.stage img{max-height:220px; max-width:100%; object-fit:contain; image-rendering:auto; filter:drop-shadow(0 6px 0 rgba(74,20,48,.12))}
+.stage .duo{max-height:200px; max-width:48%}
+.sticker{
+  position:absolute; right:-6px; top:-4px; width:92px; height:84px; display:grid; place-items:center;
+  transform:rotate(10deg);
+  font-family:var(--mono); font-weight:700; font-size:11px; line-height:1.1; text-transform:uppercase; color:var(--rose-deep);
+}
+.sticker svg{position:absolute; inset:0; width:100%; height:100%}
+.sticker span{position:relative; padding:0 14px 10px}
+.punch{font-size:18px; min-height:1.4em; margin:0; font-weight:600}
+.btns{display:flex; gap:14px; justify-content:center; align-items:center; min-height:64px; position:relative}
+button{font:800 17px/1 var(--body); border-radius:999px; border:2px solid var(--ink); padding:15px 30px; cursor:pointer; transition:transform .15s ease}
+button:focus-visible{outline:3px solid var(--rose); outline-offset:3px}
+.yes{background:var(--rose); color:#fff; box-shadow:0 4px 0 var(--ink)}
+.yes:active{transform:translateY(3px); box-shadow:0 1px 0 var(--ink)}
+.no{background:#fff; color:var(--ink); box-shadow:0 4px 0 var(--ink); position:relative}
+.no.loose{position:fixed; z-index:5; transition:left .18s ease, top .18s ease, transform .18s ease}
+.progress{display:flex; gap:6px; justify-content:center}
+.progress i{width:10px; height:10px; border-radius:50%; border:2px solid var(--ink)}
+.progress i.on{background:var(--rose)}
+.cert dl{display:grid; grid-template-columns:auto 1fr; gap:6px 14px; text-align:left; margin:10px auto 0; font-size:15px; width:max-content; max-width:100%}
+.cert dt{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--rose-deep); align-self:center}
+.cert dd{margin:0; font-weight:600}
+.enter{display:inline-block; text-decoration:none; background:var(--ink); color:#fff; border-radius:999px; padding:15px 26px; font-weight:800; border:2px solid var(--ink)}
+.enter:focus-visible{outline:3px solid var(--rose); outline-offset:3px}
+.small{font-size:13px; opacity:.7; margin:0}
+.pop{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{transform:scale(.85); opacity:.4} to{transform:scale(1); opacity:1}}
+.bob{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){ .pop,.bob{animation:none} .no.loose{transition:none} }
+.btns.stack{flex-direction:column; gap:12px}
+.mgr{background:#ffe98f; color:var(--ink); box-shadow:0 4px 0 var(--ink)}
+.mgr:active{transform:translateY(3px); box-shadow:0 1px 0 var(--ink)}
+.link{background:none; border:0; box-shadow:none; padding:4px; font:700 15px var(--body); color:var(--rose-deep); text-decoration:none; cursor:pointer}
+.link:hover{text-decoration:underline}
+.stage.short{height:150px} .stage.short img{max-height:150px}
+.form{display:flex; flex-direction:column; gap:14px; text-align:left}
+.form .yes{align-self:center}
+.rate{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; padding:6px 0; border-bottom:1.5px dashed #f2c6d6}
+.rl{font-weight:700; font-size:15px}
+.hs{display:flex; flex-direction:row-reverse; gap:2px}
+.hs label{position:relative; cursor:pointer}
+.hs input{position:absolute; opacity:0; inset:0; margin:0; cursor:pointer}
+.hs span{font-size:26px; line-height:1; color:#f2c6d6; transition:transform .12s}
+/* row-reverse: checked heart and every heart before it (visually) light up */
+.hs label:has(input:checked) span, .hs label:has(input:checked) ~ label span{color:var(--rose)}
+.hs label:hover span, .hs label:hover ~ label span{color:var(--rose-deep)}
+.hs input:focus-visible + span{outline:3px solid var(--rose); outline-offset:2px; border-radius:6px}
+.hs label:active span{transform:scale(1.25)}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
+.f{display:flex; flex-direction:column; gap:6px; font-weight:700; font-size:15px}
+textarea,select{font:16px var(--body); padding:11px 13px; border-radius:12px; border:2px solid var(--ink); background:#fff; color:var(--ink); width:100%; resize:vertical}
+textarea:focus-visible,select:focus-visible{outline:3px solid var(--rose); outline-offset:2px}
+fieldset{border:0; margin:0; padding:0}
+legend{font-weight:700; font-size:15px; margin-bottom:8px; padding:0}
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{position:relative}
+.chip input{position:absolute; opacity:0; inset:0; margin:0; cursor:pointer}
+.chip span{display:inline-block; padding:8px 13px; border-radius:999px; border:2px solid var(--ink); font-weight:700; font-size:14px; background:#fff}
+.chip input:checked + span{background:var(--rose); color:#fff}
+.chip input:focus-visible + span{outline:3px solid var(--rose); outline-offset:2px}
+@media (max-height:700px){ .stage{height:170px} .stage img{max-height:170px} }
+</style>
+</head>
+<body>
+<canvas id="hearts" aria-hidden="true"></canvas>
+<main class="card" id="card" aria-live="polite"></main>
+<script src="../config.js"></script>
+
+<script>
+const questions = [
+  { q:"Do you like me?", img:["kisho","ruxi"], candy:"BE MINE", yes:"I knew it.", no:"wrong button, try again" },
+  { q:"Do you like the way we kiss?", img:["kiss"], candy:"KISS ME", yes:"Same. A lot.", no:"lies. detected." },
+  { q:"Are you from Tennessee?", img:["jump"], candy:"10 / 10", yes:"…cuz you're the only 10 I see.", no:"…well you're still the only 10 I see." },
+  { q:"Are you a psychic?", img:["lovers"], candy:"I KNEW", yes:"Then you already knew I'd ask that.", no:"you saw this coming though." },
+  { q:"Do you believe in UAPs?", img:["space"], candy:"OUT OF THIS WORLD", yes:"Good, cuz you're out of this world.", no:"weird, cuz you're out of this world." },
+  { q:"Is your name Wi‑Fi?", img:["wizard"], candy:"FULL BARS", yes:"Cuz I'm feeling a connection.", no:"still feeling a connection tho." },
+  { q:"Will you stay my favorite person?", img:["handoff"], candy:"4EVER", yes:"Deal. No refunds.", no:"that button doesn't work, sorry." }
+];
+const noLines = ["nope","nice try","nuh uh","not today","wrong one","🙅","lol no"];
+const candyColors = ["#ffe98f","#9fe3c9","#ffffff","#ffc4d8","#d7c7ff","#ffe98f","#9fe3c9"];
+const alts = {kisho:"Kisho",ruxi:"Ruxi",kiss:"Kisho and Ruxi kissing",jump:"Ruxi jumping",lovers:"The Lovers tarot card",space:"Ruxi in a spacesuit",wizard:"Ruxi as a wizard",handoff:"Kisho handing Ruxi a drill"};
+// preload
+["kisho","ruxi","kiss","jump","lovers","space","wizard","handoff","drink"].forEach(n=>{ const im=new Image(); im.src=`img/${n}.webp`; });
+
+const card = document.getElementById('card');
+let i = 0, dodges = 0;
+const heartSVG = (fill) => `<svg viewBox="0 0 100 92" aria-hidden="true"><path d="M50 88C20 66 4 50 4 30 4 15 15 4 29 4c9 0 16 5 21 12C55 9 62 4 71 4c14 0 25 11 25 26 0 20-16 36-46 58z" fill="${fill}" stroke="#4a1430" stroke-width="3"/></svg>`;
+const dots = () => `<div class="progress" aria-label="question ${i+1} of ${questions.length}">${questions.map((_,k)=>`<i class="${k<=i?'on':''}"></i>`).join('')}</div>`;
+
+function render(){
+  dodges = 0;
+  document.querySelectorAll('.no.loose').forEach(b=>b.remove());
+  const Q = questions[i];
+  const imgs = Q.img.map(n=>`<img class="${Q.img.length>1?'duo':''} bob" src="img/${n}.webp" alt="${alts[n]}">`).join('');
+  card.innerHTML = `
+    <div class="eyebrow">Official questionnaire · ${i+1} of ${questions.length}</div>
+    ${dots()}
+    <div class="stage pop">${imgs}<div class="sticker">${heartSVG(candyColors[i])}<span>${Q.candy}</span></div></div>
+    <h1 class="pop">${Q.q}</h1>
+    <p class="punch" id="punch">&nbsp;</p>
+    <div class="btns">
+      <button class="yes" id="yes">Yes</button>
+      <button class="no" id="no">No</button>
+    </div>`;
+  const yes = document.getElementById('yes'), no = document.getElementById('no'), punch = document.getElementById('punch');
+  let answered = false;
+  yes.onclick = () => {
+    if(answered) return; answered = true;
+    punch.textContent = Q.yes; punch.classList.add('pop');
+    burst(yes); no.disabled = true;
+    setTimeout(next, 1600);
+  };
+  const dodge = (e) => {
+    if(answered) return;
+    e.preventDefault();
+    dodges++;
+    punch.textContent = dodges > 2 ? Q.no : noLines[dodges % noLines.length];
+    yes.style.transform = `scale(${Math.min(1 + dodges*0.12, 1.8)})`;
+    if(!no.classList.contains('loose')){
+      const r = no.getBoundingClientRect();
+      no.classList.add('loose'); document.body.appendChild(no);
+      no.style.left = r.left+'px'; no.style.top = r.top+'px';
+    }
+    const pad = 20, w = no.offsetWidth, h = no.offsetHeight;
+    no.style.left = (pad + Math.random()*(innerWidth - w - pad*2))+'px';
+    no.style.top = (pad + Math.random()*(innerHeight - h - pad*2))+'px';
+    no.style.transform = `scale(${Math.max(1 - dodges*0.12, 0.45)}) rotate(${(Math.random()*30-15).toFixed(0)}deg)`;
+    no.textContent = noLines[dodges % noLines.length];
+  };
+  no.addEventListener('pointerenter', e => { if(e.pointerType==='mouse') dodge(e); });
+  no.addEventListener('pointerdown', dodge);
+  no.addEventListener('click', dodge);
+  no.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') dodge(e); });
+}
+function next(){ i++; i < questions.length ? render() : finish(); }
+
+function finish(){
+  document.querySelectorAll('.no.loose').forEach(b=>b.remove());
+  const today = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  card.innerHTML = `
+    <div class="eyebrow">Results are in</div>
+    <div class="stage pop"><img class="bob" src="img/kiss.webp" alt="Kisho and Ruxi kissing"><div class="sticker">${heartSVG('#e8467c')}<span style="color:#fff">7 / 7</span></div></div>
+    <div class="cert pop">
+      <h1>Certified: Ruxi likes Kisho.</h1>
+      <dl>
+        <dt>Score</dt><dd>7 out of 7, perfect</dd>
+        <dt>Kisses</dt><dd>approved</dd>
+        <dt>Rating</dt><dd>the only 10</dd>
+        <dt>Signed</dt><dd>${today}</dd>
+      </dl>
+    </div>
+    <p class="small">This certificate is legally binding in Astoria.</p>
+    <div class="btns stack">
+      <button class="yes" id="toEval">Rate your boyfriend</button>
+      <button class="mgr" id="toMgr">Speak to the manager</button>
+      <a class="link" href="../">See the stuff we make →</a>
+      <button class="link" id="again">Take the quiz again</button>
+    </div>`;
+  document.getElementById('toEval').onclick = evaluation;
+  document.getElementById('toMgr').onclick = manager;
+  document.getElementById('again').onclick = () => { i = 0; render(); };
+  for(let k=0;k<4;k++) setTimeout(()=>burst(card), k*220);
+}
+
+/* ---------- evaluation + manager ---------- */
+const CFG = window.WS_CONFIG || {};
+async function save(row){
+  const res = await fetch(CFG.SUPABASE_URL + '/rest/v1/ruxi_notes', {
+    method:'POST',
+    headers:{ 'apikey':CFG.SUPABASE_ANON_KEY, 'Authorization':'Bearer '+CFG.SUPABASE_ANON_KEY, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
+    body: JSON.stringify(row)
+  });
+  if(!res.ok) throw new Error(res.status);
+}
+const categories = [
+  ["kisses","Kisses"], ["cuddles","Cuddles"], ["dates","Date nights"],
+  ["texting","Texting back speed"], ["snacks","Snack sharing"], ["overall","Overall boyfriend"]
+];
+function heartsRow(key,label){
+  return `<div class="rate" role="radiogroup" aria-label="${label}">
+    <span class="rl">${label}</span>
+    <span class="hs">${[5,4,3,2,1].map(n=>`<label><input type="radio" name="${key}" id="${key}-${n}" value="${n}" ${n===5?'checked':''}><span aria-hidden="true">♥</span><b class="sr">${n} hearts</b></label>`).join('')}</span>
+  </div>`;
+}
+function evaluation(){
+  card.innerHTML = `
+    <div class="eyebrow">Customer satisfaction survey</div>
+    <div class="stage short pop"><img class="bob" src="img/kisho.webp" alt="Kisho"><div class="sticker">${heartSVG('#ffe98f')}<span>RATE ME</span></div></div>
+    <h1>How's your boyfriend doing?</h1>
+    <form id="evalForm" class="form" novalidate>
+      ${categories.map(([k,l])=>heartsRow(k,l)).join('')}
+      <label class="f" for="more">What should Kisho do more of?
+        <textarea id="more" name="more" rows="2" maxlength="500" placeholder="more forehead kisses, more snacks…"></textarea>
+      </label>
+      <label class="f" for="recommend">Would you recommend him to a friend?
+        <select id="recommend" name="recommend">
+          <option>No, he's mine</option><option>Absolutely not, he's taken</option><option>Only as a bartender</option>
+        </select>
+      </label>
+      <button class="yes" type="submit" id="sendEval">Submit evaluation</button>
+      <p class="punch" id="evalMsg" role="status"></p>
+    </form>
+    <button class="link" id="back1">← back to the certificate</button>`;
+  document.getElementById('back1').onclick = finish;
+  document.getElementById('evalForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const f = e.target, btn = document.getElementById('sendEval'), msg = document.getElementById('evalMsg');
+    const ratings = Object.fromEntries(categories.map(([k])=>[k, +f[k].value]));
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try{
+      await save({ kind:'evaluation', ratings, message: f.more.value.trim() || null, topic: f.recommend.value });
+      thanks('Evaluation received.', 'Your boyfriend has been notified and is blushing.', 'kiss');
+    }catch(err){
+      msg.textContent = "That didn't send. Try again in a sec."; btn.disabled = false; btn.textContent = 'Submit evaluation';
+    }
+  };
+}
+const complaints = ["Not enough kisses","Didn't text back","Ate my snacks","Too cute, it's unfair","Was right about something","Other"];
+const levels = ["Mildly annoyed","Pouting","Arms crossed","I want a refund"];
+function manager(){
+  card.innerHTML = `
+    <div class="eyebrow">Customer service desk</div>
+    <div class="stage short pop"><img class="bob" src="img/kisho.webp" alt="Kisho"><div class="sticker">${heartSVG('#d7c7ff')}<span>ON DUTY</span></div></div>
+    <h1>You'd like to speak to the manager?</h1>
+    <p class="small" style="opacity:.85">Manager on duty: Kisho. He's also the boyfriend. Conflict of interest noted.</p>
+    <form id="mgrForm" class="form" novalidate>
+      <fieldset><legend>What's the issue?</legend>
+        <div class="chips">${complaints.map((c,k)=>`<label class="chip"><input type="radio" name="topic" id="t${k}" value="${c}" ${k===0?'checked':''}><span>${c}</span></label>`).join('')}</div>
+      </fieldset>
+      <fieldset><legend>How upset are we?</legend>
+        <div class="chips">${levels.map((c,k)=>`<label class="chip"><input type="radio" name="level" id="l${k}" value="${c}" ${k===1?'checked':''}><span>${c}</span></label>`).join('')}</div>
+      </fieldset>
+      <label class="f" for="details">Tell the manager everything
+        <textarea id="details" name="details" rows="3" maxlength="800" placeholder="Today at approximately 4:12pm, he…"></textarea>
+      </label>
+      <button class="yes" type="submit" id="sendMgr">File complaint</button>
+      <p class="punch" id="mgrMsg" role="status"></p>
+    </form>
+    <button class="link" id="back2">← never mind, he's fine</button>`;
+  document.getElementById('back2').onclick = finish;
+  document.getElementById('mgrForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const f = e.target, btn = document.getElementById('sendMgr'), msg = document.getElementById('mgrMsg');
+    btn.disabled = true; btn.textContent = 'Escalating…';
+    try{
+      await save({ kind:'complaint', topic: f.topic.value, severity: f.level.value, message: f.details.value.trim() || null });
+      thanks('Complaint escalated.', `The manager has reviewed your case ("${f.topic.value}") and approved compensation: unlimited kisses.`, 'handoff');
+    }catch(err){
+      msg.textContent = "The manager's line is busy. Try again in a sec."; btn.disabled = false; btn.textContent = 'File complaint';
+    }
+  };
+}
+function thanks(title, body, img){
+  card.innerHTML = `
+    <div class="eyebrow">Ticket closed</div>
+    <div class="stage pop"><img class="bob" src="img/${img}.webp" alt=""><div class="sticker">${heartSVG('#9fe3c9')}<span>THANK YOU</span></div></div>
+    <h1>${title}</h1>
+    <p class="punch" style="font-weight:500">${body.replace(/</g,'&lt;')}</p>
+    <div class="btns stack">
+      <button class="yes" id="b1">Rate your boyfriend</button>
+      <button class="mgr" id="b2">Speak to the manager (again)</button>
+      <a class="link" href="../">See the stuff we make →</a>
+    </div>`;
+  document.getElementById('b1').onclick = evaluation;
+  document.getElementById('b2').onclick = manager;
+  for(let k=0;k<3;k++) setTimeout(()=>burst(card), k*220);
+}
+
+/* floating hearts */
+const cv = document.getElementById('hearts'), cx = cv.getContext('2d');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let parts = [];
+function size(){ cv.width = innerWidth*devicePixelRatio; cv.height = innerHeight*devicePixelRatio; cx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
+size(); addEventListener('resize', size);
+function heart(x,y,s,c,a){ cx.save(); cx.globalAlpha=a; cx.translate(x,y); cx.scale(s/100,s/100); cx.fillStyle=c; cx.beginPath(); cx.moveTo(0,30); cx.bezierCurveTo(-50,-5,-30,-50,0,-20); cx.bezierCurveTo(30,-50,50,-5,0,30); cx.fill(); cx.restore(); }
+function ambient(){ return {x:Math.random()*innerWidth, y:innerHeight+20, vx:(Math.random()-.5)*.3, vy:-(.3+Math.random()*.5), s:10+Math.random()*16, c:['#e8467c','#ffb3cb','#ffffff','#9fe3c9'][Math.random()*4|0], a:.55, life:Infinity}; }
+if(!reduce) for(let k=0;k<14;k++){ const p=ambient(); p.y=Math.random()*innerHeight; parts.push(p); }
+function burst(el){
+  if(reduce) return;
+  const r = el.getBoundingClientRect(), ox=r.left+r.width/2, oy=r.top+r.height/2;
+  for(let k=0;k<22;k++){ const ang=Math.random()*Math.PI*2, sp=2+Math.random()*4;
+    parts.push({x:ox,y:oy,vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp-2,s:10+Math.random()*14,c:['#e8467c','#c22a5f','#ffe98f','#9fe3c9','#fff'][Math.random()*5|0],a:1,life:70,g:.12}); }
+}
+function tick(){
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  parts = parts.filter(p=>{
+    p.x+=p.vx; p.y+=p.vy; if(p.g) p.vy+=p.g;
+    if(p.life!==Infinity){ p.life--; p.a=Math.max(0,p.life/70); }
+    heart(p.x,p.y,p.s,p.c,p.a);
+    if(p.life===Infinity && p.y<-30) Object.assign(p, ambient());
+    return p.life>0;
+  });
+  requestAnimationFrame(tick);
+}
+if(!reduce) tick();
+render();
+</script>
+</body>
+</html>
