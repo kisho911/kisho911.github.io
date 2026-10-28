@@ -53,6 +53,14 @@ section+section{margin-top:48px}
 .ticket.secret{background-image:repeating-linear-gradient(-45deg, transparent 0 14px, color-mix(in srgb, var(--rose) 7%, transparent) 14px 28px)}
 .redact{color:var(--ink); letter-spacing:-1px; user-select:none}
 
+.steps{display:flex; flex-direction:column; gap:8px}
+.step{display:flex; align-items:center; gap:10px; text-decoration:none; font-weight:800; font-size:15px; color:var(--ink); border:2px solid var(--ink); border-radius:12px; padding:9px 12px; background:var(--field)}
+.step b{display:grid; place-items:center; width:24px; height:24px; flex:none; border-radius:50%; background:var(--ink); color:var(--bg); font:700 12px var(--mono)}
+.step:hover{background:var(--surface)}
+.step.play{background:var(--rose); color:#fff}
+.step.play b{background:#fff; color:var(--rose)}
+.step.off{opacity:.55; font-weight:600; border-style:dashed}
+.about a{color:var(--rose); font-weight:700}
 /* tester form */
 .signup{background:var(--surface); border:2px solid var(--ink); border-radius:24px; padding:26px; box-shadow:0 4px 0 var(--ink); display:grid; grid-template-columns:1fr 1.2fr; gap:28px}
 .signup h2{font-family:var(--display); font-weight:400; font-size:clamp(28px,6vw,38px); line-height:1.08; margin:0 0 10px; text-wrap:balance}
@@ -86,7 +94,7 @@ footer{margin-top:56px; padding-top:20px; border-top:2px dashed var(--line); col
   <header>
     <span class="kicker">Made in Astoria, NY</span>
     <h1>Kisho <span class="amp">&amp;</span> Ruxi Workshop</h1>
-    <p class="lede">Apps, tools and little websites we make together. Some are still cooking. Want to try them before anyone else? Get on the tester list.</p>
+    <p class="lede">Apps, tools and little websites we make together. Some are still cooking. Two of our apps are in testing on Google Play right now, and we need testers to launch them.</p>
     <a class="cta" href="#testers">Become a tester</a>
   </header>
 
@@ -110,15 +118,21 @@ footer{margin-top:56px; padding-top:20px; border-top:2px dashed var(--line); col
         <div class="swatch" style="background:var(--sky)">☾</div>
         <h2>Vessel</h2>
         <p>A memory and journaling app where entries become stars in your own nebula. Works fully offline, no account.</p>
-        <a class="go" href="#testers" data-app="Vessel">Test it early →</a>
+        <div class="steps">
+          <a class="step" href="https://groups.google.com/g/kisho-ruxi-testers" target="_blank" rel="noopener"><b>1</b>Join the tester group</a>
+          <span class="step off"><b>2</b>Play link opens in a few days</span>
+        </div>
         <div class="tags"><span class="tag">Android</span><span class="tag s-proto">Prototype</span></div>
       </article>
       <article class="ticket">
         <div class="swatch" style="background:var(--mint)">⛨</div>
         <h2>PrivateLink</h2>
         <p>Ruxi's idea. Open links people send you in a sealed-off window, so they don't mess with your feed or algorithm.</p>
-        <a class="go" href="#testers" data-app="PrivateLink">Test it early →</a>
-        <div class="tags"><span class="tag">Android</span><span class="tag s-proto">Prototype</span></div>
+        <div class="steps">
+          <a class="step" href="https://groups.google.com/g/kisho-ruxi-testers" target="_blank" rel="noopener"><b>1</b>Join the tester group</a>
+          <a class="step play" href="https://play.google.com/apps/testing/com.kisho911.privatelink" target="_blank" rel="noopener"><b>2</b>Get it on Google Play</a>
+        </div>
+        <div class="tags"><span class="tag">Android</span><span class="tag s-live">Testing on Play</span></div>
       </article>
     </div>
   </section>
@@ -146,10 +160,10 @@ footer{margin-top:56px; padding-top:20px; border-top:2px dashed var(--line); col
   <section id="testers">
     <div class="signup">
       <div class="about">
-        <h2>Join the tester list</h2>
-        <p>Pick the apps you want to try. When a test build is ready, we'll email you an invite to download it from Google Play.</p>
-        <p>Use the Google account email that's signed in on your Android phone, or Play won't let you in.</p>
-        <p>We only use your email for test invites.</p>
+        <h2>Help us launch</h2>
+        <p>Google won't let our apps go public until 12 people test them for 14 days. You'd be doing us a huge favor.</p>
+        <p><strong>Fastest way:</strong> <a href="https://groups.google.com/g/kisho-ruxi-testers" target="_blank" rel="noopener">join our tester group</a> with the Google account on your Android phone, then tap <strong>Get it on Google Play</strong> on the app above. Keep it installed for two weeks. That's it.</p>
+        <p>Or leave your email here and we'll invite you, including to AstroChart when it's ready. We only use it for test invites.</p>
       </div>
       <form id="signup" novalidate>
         <label class="f" for="name">First name <small>optional</small>
