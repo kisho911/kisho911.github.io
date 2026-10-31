@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Christian Ascencio, Bartender</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout: a printed bar menu card — one narrow column, ruled sections, items listed like drinks with the year where the price would sit */
+  --bg: #17131a;          /* smoked plum, the back bar after close */
+  --card: #1f1a23;
+  --ink: #efe6d6;         /* menu-card cream */
+  --muted: #a99d8c;
+  --brass: #c9a35a;       /* rail and tap handles */
+  --hibiscus: #d9557a;    /* used once: the house syrup */
+  --rule: #3a3140;
+  --display: "Italiana", "Didot", "Bodoni 72", Georgia, serif;
+  --body: "Jost", "Futura", "Avenir Next", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--ink); }
+body {
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--brass); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+
+.menu {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 20px 72px;
+  display: grid;
+  gap: 64px;
+}
+
+/* ---------- Hero ---------- */
+.hero { text-align: left; display: grid; gap: 18px; }
+.house {
+  font-size: 12px; letter-spacing: .32em; text-transform: uppercase; color: var(--brass);
+}
+h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(54px, 13vw, 112px);
+  line-height: .92;
+  letter-spacing: -.01em;
+  text-wrap: balance;
+}
+h1 span { display: block; }
+.pour {
+  height: 2px; width: 100%; background: var(--rule); position: relative; overflow: hidden;
+}
+.pour::after {
+  content: ""; position: absolute; inset: 0; background: var(--brass);
+  transform-origin: left; animation: pour 1.6s cubic-bezier(.6,.1,.2,1) both;
+}
+@keyframes pour { from { transform: scaleX(.08); } to { transform: scaleX(1); } }
+.roles { font-size: 15px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink); }
+.roles b { color: var(--brass); font-weight: 400; padding: 0 .4em; }
+.thesis { max-width: 58ch; color: var(--muted); font-size: 18px; }
+.thesis em { color: var(--ink); font-style: normal; }
+
+/* ---------- Stats strip ---------- */
+.specs {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+.spec { padding: 18px 12px; display: grid; gap: 2px; border-left: 1px solid var(--rule); }
+.spec:first-child { border-left: 0; padding-left: 0; }
+.spec .n { font-family: var(--display); font-size: 40px; line-height: 1; font-variant-numeric: tabular-nums; }
+.spec .l { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- Section headings ---------- */
+section { display: grid; gap: 22px; }
+h2 {
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--display); font-weight: 400; font-size: 34px; letter-spacing: .02em;
+}
+h2::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+.lede { color: var(--muted); max-width: 60ch; }
+
+/* ---------- Menu items (experience) ---------- */
+.items { list-style: none; display: grid; gap: 26px; }
+.item { display: grid; gap: 6px; }
+.item-head {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: baseline; gap: 12px;
+}
+.item-name { font-size: 19px; font-weight: 500; letter-spacing: .02em; }
+.dots { border-bottom: 1px dotted var(--rule); transform: translateY(-5px); min-width: 20px; }
+.item-year {
+  font-size: 14px; letter-spacing: .06em; color: var(--brass);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.item-role { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.item-desc { color: var(--ink); opacity: .86; max-width: 62ch; }
+
+/* ---------- Behind the bar ---------- */
+.craft { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.craft-card {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 2px;
+  padding: 22px; display: grid; gap: 8px; align-content: start;
+}
+.craft-card h3 { font-family: var(--display); font-weight: 400; font-size: 24px; }
+.craft-card p { color: var(--muted); font-size: 15px; }
+.craft-card.signature { border-color: var(--hibiscus); }
+.craft-card.signature h3 { color: var(--hibiscus); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
+.tags li {
+  font-size: 13px; letter-spacing: .06em; padding: 6px 12px;
+  border: 1px solid var(--rule); border-radius: 999px; color: var(--ink);
+}
+
+/* ---------- Contact ---------- */
+.contact {
+  border: 1px solid var(--brass); padding: 28px; display: grid; gap: 16px;
+}
+.contact h2::after { display: none; }
+.contact-lines { display: grid; gap: 10px; }
+.line { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.line .k { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); min-width: 64px; }
+.line .v { font-size: 19px; font-variant-numeric: tabular-nums; }
+.copy {
+  font: inherit; font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  background: transparent; color: var(--brass); border: 1px solid var(--brass);
+  padding: 5px 12px; border-radius: 999px; cursor: pointer;
+}
+.copy:hover { background: var(--brass); color: var(--bg); }
+.avail { color: var(--muted); font-size: 15px; }
+
+footer { color: var(--muted); font-size: 13px; letter-spacing: .08em; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+@media (max-width: 620px) {
+  .specs { grid-template-columns: repeat(2, 1fr); }
+  .spec:nth-child(3) { border-left: 0; padding-left: 0; }
+  .spec:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .craft { grid-template-columns: 1fr; }
+  .item-head { grid-template-columns: 1fr auto; }
+  .dots { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pour::after { animation: none; }
+}
+</style>
+</head>
+<body>
+<main class="menu">
+
+  <header class="hero">
+    <p class="house">New York City · Est. 2010</p>
+    <h1><span>Christian</span><span>Ascencio</span></h1>
+    <div class="pour" aria-hidden="true"></div>
+    <p class="roles">Head Bartender<b>·</b>Bar Captain<b>·</b>Bar Lead</p>
+    <p class="thesis">Ten-plus years behind Manhattan's busiest bars and dining rooms. I build cocktail programs from the syrups up, run a rail at full volume, and lead the floor so every guest feels <em>looked after, not processed</em>.</p>
+  </header>
+
+  <div class="specs" role="list">
+    <div class="spec" role="listitem"><span class="n">10+</span><span class="l">Years in NYC</span></div>
+    <div class="spec" role="listitem"><span class="n">8</span><span class="l">Manhattan rooms</span></div>
+    <div class="spec" role="listitem"><span class="n">2</span><span class="l">Bar programs built</span></div>
+    <div class="spec" role="listitem"><span class="n">EN/ES</span><span class="l">Bilingual</span></div>
+  </div>
+
+  <section aria-labelledby="h-exp">
+    <h2 id="h-exp">The List</h2>
+    <ol class="items">
+      <li class="item">
+        <div class="item-head"><span class="item-name">Lithos</span><span class="dots"></span><span class="item-year">2026</span></div>
+        <span class="item-role">Head Bartender · Financial District</span>
+        <p class="item-desc">Ran the full bar program for a high-volume room. Designed and launched a custom cocktail menu with house-made syrups, set station layouts for peak service, and paced floor labor off nightly covers and reservations.</p>
+      </li>
+      <li class="item">
+        <div class="item-head"><span class="item-name">Gallaghers Steakhouse</span><span class="dots"></span><span class="item-year">2024–2026</span></div>
+        <span class="item-role">Bartender &amp; Captain · Theater District</span>
+        <p class="item-desc">Led servers and bussers through high-volume steakhouse service, sold specials off deep menu knowledge, and closed out sales, cash and tip distribution every night. Kept the bar stocked to par with clean, fast ticket pacing.</p>
+      </li>
+      <li class="item">
+        <div class="item-head"><span class="item-name">Friend of a Farmer</span><span class="dots"></span><span class="item-year">2023–2025</span></div>
+        <span class="item-role">Bartender · Gramercy</span>
+        <p class="item-desc">Built a farm-to-glass cocktail program to match the farm-to-table kitchen: seasonal menus from local produce, house infusions, and batched builds that held up during brunch rushes.</p>
+      </li>
+      <li class="item">
+        <div class="item-head"><span class="item-name">Tudor City Steakhouse</span><span class="dots"></span><span class="item-year">2022–2023</span></div>
+        <span class="item-role">Bartender · Midtown East</span>
+        <p class="item-desc">Classic steakhouse bar: cocktails, wine and beer to standard, with a clean, well-rotated back bar.</p>
+      </li>
+      <li class="item">
+        <div class="item-head"><span class="item-name">Empellón Midtown</span><span class="dots"></span><span class="item-year">2017–2019</span></div>
+        <span class="item-role">Server Assistant · Barback · Bartender</span>
+        <p class="item-desc">Fine-dining service and a deep education in tequila and mezcal, from barback to behind the stick.</p>
+      </li>
+      <li class="item">
+        <div class="item-head"><span class="item-name">Refinery Rooftop &amp; Trademark</span><span class="dots"></span><span class="item-year">2013–2017</span></div>
+        <span class="item-role">Expo · Food Runner · Trainer</span>
+        <p class="item-desc">Ran the pass between kitchen and floor across banquets, catering and rooftop service, and trained new runners, bussers and servers.</p>
+      </li>
+      <li class="item">
+        <div class="item-head"><span class="item-name">David Burke Kitchen</span><span class="dots"></span><span class="item-year">2011–2013</span></div>
+        <span class="item-role">Server · Food Runner · Bartender</span>
+        <p class="item-desc">Where the mixology started: prepping fruit, house syrups and infused spirits for the bar.</p>
+      </li>
+      <li class="item">
+        <div class="item-head"><span class="item-name">Sinigual</span><span class="dots"></span><span class="item-year">2010–2011</span></div>
+        <span class="item-role">Server · Food Runner</span>
+        <p class="item-desc">Contemporary Mexican, Grand Central. First NYC floor, first chef's specials sold.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-craft">
+    <h2 id="h-craft">Behind the Bar</h2>
+    <div class="craft">
+      <article class="craft-card signature">
+        <h3>House syrups &amp; infusions</h3>
+        <p>Hibiscus, arugula, tea-based and spicy builds, made in-house so the menu tastes like the room and not like a bottle.</p>
+      </article>
+      <article class="craft-card">
+        <h3>Programs from scratch</h3>
+        <p>Two cocktail menus taken from blank page to launch: concept, specs, batching, station layout and training the team to pour them the same way every night.</p>
+      </article>
+      <article class="craft-card">
+        <h3>Volume without the chaos</h3>
+        <p>Steakhouse rushes, rooftop crowds and brunch lines. Par levels, prep and ticket pacing set up so the rail never runs dry at 9 PM.</p>
+      </article>
+      <article class="craft-card">
+        <h3>The floor, too</h3>
+        <p>Captain experience leading servers and bussers, reading tables, selling specials, and closing out the night's numbers.</p>
+      </article>
+    </div>
+    <ul class="tags" aria-label="Skills">
+      <li>Cocktail development</li>
+      <li>Tequila &amp; mezcal</li>
+      <li>Batching</li>
+      <li>Inventory &amp; ordering</li>
+      <li>Staff training</li>
+      <li>Cost control</li>
+      <li>Cash handling</li>
+      <li>Allergen safety</li>
+      <li>Toast · Micros · Aloha · Square · Clover</li>
+    </ul>
+  </section>
+
+  <section class="contact" aria-labelledby="h-contact">
+    <h2 id="h-contact">Book a Shift</h2>
+    <div class="contact-lines">
+      <div class="line">
+        <span class="k">Email</span>
+        <a class="v" href="mailto:chrisasc91@gmail.com">chrisasc91@gmail.com</a>
+        <button class="copy" type="button" data-copy="chrisasc91@gmail.com">Copy</button>
+      </div>
+      <div class="line">
+        <span class="k">Phone</span>
+        <a class="v" href="tel:+19174169011">(917) 416-9011</a>
+        <button class="copy" type="button" data-copy="(917) 416-9011">Copy</button>
+      </div>
+    </div>
+    <p class="avail">Based in New York. Available now for bartender, head bartender, bar lead and captain roles in Manhattan. Resume on request.</p>
+  </section>
+
+  <footer>
+    <span>Christian Ascencio</span>
+    <span>English · Español</span>
+  </footer>
+
+</main>
+<script>
+document.querySelectorAll('.copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var text = btn.getAttribute('data-copy');
+    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
+    try {
+      navigator.clipboard.writeText(text).then(done, function () { btn.textContent = 'Select & copy'; });
+    } catch (e) { btn.textContent = 'Select & copy'; }
+  });
+});
+</script>
+</body>
+</html>
