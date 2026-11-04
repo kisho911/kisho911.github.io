@@ -29,12 +29,17 @@ window.PGONE = (() => {
     nightcity: { name: "Night city", key: "bg0" },
     coral: { name: "Coral sunset", key: "bg0_coral" },
     galaxy: { name: "Lilac galaxy", key: "kit-sky-galaxy", file: "bg_space_0" },
+    sakura: { name: "Sakura night", key: "sky-sakura", file: "bg_sakura", load: true },
+    candy: { name: "Candy clouds", key: "sky-candy", file: "bg_candy", load: true },
+    reef: { name: "Crystal reef", key: "sky-reef", file: "bg_reef", load: true },
+    aurora: { name: "Aurora snow", key: "sky-aurora", file: "bg_aurora", load: true },
   };
 
   // queue extra images (new cloud platforms padded like the originals, galaxy sky) in the boot loader
   function preload(scene) {
     if (KIT.plats.clouds) KIT.plats.clouds.items.forEach((src, i) => scene.load.image("kit-clouds-" + i, src));
     scene.load.image("kit-sky-galaxy", "bg_space_0.webp");
+    Object.values(SKIES).forEach((sk) => { if (sk.load) scene.load.image(sk.key, sk.file + ".webp"); });
   }
 
   // build the custom character's textures (square, framed like her original sprites)
