@@ -153,7 +153,7 @@ window.PGONE = (() => {
 #pgc .note{font-size:calc(12*var(--dp));color:#ffffff88;text-align:center;margin-top:calc(10*var(--dp))}
 #pgcode{position:absolute;inset:0;z-index:30000;display:flex;align-items:center;justify-content:center;background:#050008cc}
 #pgcode form{background:#16062a;border:calc(2*var(--dp)) solid #FF69B4;border-radius:calc(18*var(--dp));padding:calc(20*var(--dp));width:calc(300*var(--dp));text-align:center}
-#pgcode input{width:100%;box-sizing:border-box;font:inherit;font-size:calc(22*var(--dp));text-align:center;letter-spacing:.15em;padding:calc(10*var(--dp));border-radius:calc(12*var(--dp));border:calc(2*var(--dp)) solid #7a4cc6;background:#050008;color:#fff;text-transform:uppercase}
+#pgcode input{width:100%;box-sizing:border-box;font:inherit;font-size:max(16px,calc(22*var(--dp)));text-align:center;letter-spacing:.15em;padding:calc(10*var(--dp));border-radius:calc(12*var(--dp));border:calc(2*var(--dp)) solid #7a4cc6;background:#050008;color:#fff;text-transform:uppercase}
 #pgcode .m{height:calc(22*var(--dp));margin-top:calc(8*var(--dp));color:#ffd1e6;font-size:calc(14*var(--dp))}`;
     document.head.appendChild(css);
     root = el("section", "screen scroll hidden"); root.id = "pgc";

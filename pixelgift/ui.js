@@ -21,7 +21,14 @@ function layoutStage(firstTime) {
   st.style.setProperty("--dp", (w / (1080 / STAGE.DP)) + "px");
 }
 layoutStage(true);
-window.addEventListener("resize", () => layoutStage(false));
+// typing: the on-screen keyboard shrinks the window; don't re-fit the game to it (that looked like a zoom-out)
+const typing = () => { const a = document.activeElement; return !!a && (a.tagName === "INPUT" || a.tagName === "TEXTAREA"); };
+window.addEventListener("resize", () => { if (!typing()) layoutStage(false); });
+document.addEventListener("focusout", () => setTimeout(() => { if (!typing()) { window.scrollTo(0, 0); layoutStage(false); } }, 250));
+// no pinch / double-tap zoom anywhere (iOS ignores user-scalable=no)
+document.addEventListener("gesturestart", (e) => e.preventDefault());
+document.addEventListener("gesturechange", (e) => e.preventDefault());
+
 
 // ── Handler.postDelayed equivalent. clear() wipes everything when leaving a screen.
 const T = {

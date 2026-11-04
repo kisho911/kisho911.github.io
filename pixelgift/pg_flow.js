@@ -97,6 +97,7 @@ window.PGFLOW = (() => {
 #pgf .bubble{background:#ffffff12;border:1px solid #FF69B455;border-radius:calc(16*var(--dp)) calc(16*var(--dp)) calc(16*var(--dp)) calc(4*var(--dp));padding:calc(10*var(--dp)) calc(12*var(--dp));font-size:calc(14*var(--dp));line-height:1.45;color:#ffe9f4;min-height:calc(40*var(--dp))}
 @keyframes pgbob{0%,100%{transform:translateY(0)}50%{transform:translateY(calc(-6*var(--dp)))}}
 #pgf h3{margin:calc(14*var(--dp)) 0 calc(8*var(--dp));font-weight:400;font-size:calc(13*var(--dp));letter-spacing:.1em;color:#FF69B4cc}
+#pgf input{font-size:max(16px,calc(18*var(--dp)))!important;font-family:inherit}
 #pgf input[type=text]{width:100%;box-sizing:border-box;font:inherit;font-size:calc(18*var(--dp));padding:calc(12*var(--dp));border-radius:calc(14*var(--dp));border:calc(2*var(--dp)) solid #6a3fa8;background:#0a0214;color:#fff}
 #pgf .row{display:flex;flex-wrap:wrap;gap:calc(9*var(--dp))}
 #pgf .pk{display:flex;justify-content:center;align-items:center;gap:calc(2*var(--dp));height:calc(40*var(--dp));margin-bottom:calc(4*var(--dp));font-size:calc(20*var(--dp))}
