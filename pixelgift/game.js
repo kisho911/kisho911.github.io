@@ -959,6 +959,36 @@ window.RUXI = (() => {
   function handleMove(x) { if (isAnyOverlayVisible()) return; if (S.fingerDown) S.lastTouchX = x; }
   function handleUp() { S.fingerDown = false; S.lastTouchX = -1; }
 
+  // ── touch input straight from the browser (not Phaser's 2 pointer slots, which iOS can leave "stuck"
+  //    after a touchcancel when something pops up under the finger) ──
+  let touchBound = null;
+  function bindTouch(cv) {
+    if (touchBound) { const o = touchBound; window.removeEventListener("pointermove", o.move); window.removeEventListener("pointerup", o.up); window.removeEventListener("pointercancel", o.up); window.removeEventListener("touchcancel", o.up); window.removeEventListener("blur", o.up); o.cv.removeEventListener("pointerdown", o.down); }
+    const wx = (e) => { const r = cv.getBoundingClientRect(); return (e.clientX - r.left) / Math.max(1, r.width) * W; };
+    const o = {
+      cv,
+      down: (e) => { dbg("down " + e.pointerType); AUDIO.unlock(); handleDown(wx(e)); },
+      move: (e) => { if (S && S.fingerDown) handleMove(wx(e)); },
+      up: (e) => { dbg((e && e.type) || "up"); handleUp(); },
+    };
+    cv.style.touchAction = "none"; cv.parentNode && (cv.parentNode.style.touchAction = "none");
+    cv.addEventListener("pointerdown", o.down);
+    window.addEventListener("pointermove", o.move); window.addEventListener("pointerup", o.up); window.addEventListener("pointercancel", o.up);
+    window.addEventListener("touchcancel", o.up); window.addEventListener("blur", o.up);
+    touchBound = o;
+  }
+  // hidden debug readout: open the game with #debug in the link
+  let dbgEl = null, dbgLast = "";
+  function dbg(msg) {
+    if (!/debug/.test(location.hash)) return;
+    dbgLast = msg;
+    if (!dbgEl) { dbgEl = document.createElement("div"); dbgEl.style.cssText = "position:absolute;left:4px;bottom:4px;z-index:40000;pointer-events:none;font:11px monospace;color:#0f8;background:#000a;padding:4px 6px;white-space:pre"; $("stage").appendChild(dbgEl); }
+  }
+  function dbgTick() {
+    if (!dbgEl || !S) return;
+    dbgEl.textContent = `last: ${dbgLast}\nrun:${S.running} start:${S.gameplayStarted} pause:${S.isPaused}\noverlay:${isAnyOverlayVisible()} pop:${window.POP && POP.isOpen()}\nfinger:${S.fingerDown} x:${Math.round(S.lastTouchX)} tapBoost:${S.canTapBoost}\nreveal:${S.pausedByReveal} seq:${S.isPlayerSequence}`;
+  }
+
   function resetOverlayGate() { S.overlayTapCount = 0; }
   function overlayTapGateWithSpells(done) {
     if (window.PGPUBLIC) { S.overlayTapCount = 0; done(); return; }
@@ -1489,10 +1519,7 @@ window.RUXI = (() => {
       buildPlatformsInitial();
       resetGame();
       handleLaunchMode(pendingMode);
-      this.input.on("pointerdown", p => { if (p.event && p.event.target !== this.game.canvas) return; AUDIO.unlock(); handleDown(p.worldX); });
-      this.input.on("pointermove", p => handleMove(p.worldX));
-      this.input.on("pointerup", () => handleUp());
-      this.input.on("gameout", () => handleUp());
+      bindTouch(this.game.canvas);
       this.acc = 0;
     }
     update(time, delta) {
@@ -1502,7 +1529,7 @@ window.RUXI = (() => {
         while (this.acc >= tickMs && S.running && n < 6) { step(); this.acc -= tickMs; n++; }
         if (n >= 6) this.acc = 0;
       } else this.acc = 0;
-      tickAnims();
+      tickAnims(); dbgTick();
       // gifts: watchdog, if the run is stopped with nothing on screen to explain it, resume after 1.2 s
       if (window.PGPUBLIC && S && S.gameplayStarted && !S.running && !S.isPaused && !isAnyOverlayVisible() && !vis("gameOverOv") && !vis("moonOv")) {
         if (!S.stuckSince) S.stuckSince = nowMs();
@@ -1556,7 +1583,7 @@ window.RUXI = (() => {
       type: Phaser.AUTO, parent: "phaser", width: LOWRES ? W / 4 : W, height: LOWRES ? Math.round(H / 4) : H, backgroundColor: "#000000",
       scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.NO_CENTER },
       render: { antialias: true, powerPreference: "high-performance" },
-      input: { activePointers: 2 }, audio: { noAudio: true }, banner: false,
+      input: { activePointers: 4 }, audio: { noAudio: true }, banner: false,
       scene: [Boot],
     });
   }
