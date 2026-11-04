@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>window.PG_PUBLIC_BUILD = true;</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>PixelGift · make a tiny game for someone you love</title>
+<meta name="theme-color" content="#050008">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+
+  <!-- ═════════ LAUNCHER ═════════ -->
+  <section id="launcher" class="screen scroll hidden">
+    <div class="lpad">
+      <h1 class="ltitle">PIXELGIFT</h1>
+      <div class="lsub">choose your world</div>
+
+      <div class="card" data-mode="city">
+        <img class="cbg" src="assets/img/bg0.webp" alt="" style="opacity:.7">
+        <div class="cshade" style="background:#88000010"></div>
+        <div class="cbar" style="background:#00E5FF"></div>
+        <div class="clabel"><div class="cname" style="--c:#00E5FF">CITY</div><div class="cdesc">Level 01 &nbsp;·&nbsp; neon streets</div></div>
+        <div class="carrow" style="--c:#00E5FF">▶</div>
+      </div>
+
+      <div class="card" data-mode="beach">
+        <img class="cbg" src="assets/img/bg3_coral.webp" alt="" style="opacity:.7">
+        <div class="cshade" style="background:#66001008"></div>
+        <div class="cbar" style="background:#FF69B4"></div>
+        <div class="clabel"><div class="cname" style="--c:#FF69B4">BEACH</div><div class="cdesc">Level 02 &nbsp;·&nbsp; coral shores</div></div>
+        <div class="carrow" style="--c:#FF69B4">▶</div>
+      </div>
+
+      <div class="card" data-mode="space">
+        <img class="cbg" src="assets/img/bg_space_2.webp" alt="" style="opacity:.7">
+        <div class="cshade" style="background:#66000010"></div>
+        <div class="cbar" style="background:#FFCC44"></div>
+        <div class="clabel"><div class="cname" style="--c:#FFCC44">SPACE</div><div class="cdesc" style="color:#FFFFFFBB">Level 03 &nbsp;·&nbsp; cosmic</div></div>
+        <div class="carrow" style="--c:#FFCC44">▶</div>
+      </div>
+
+      <div class="card small" data-mode="collect">
+        <div class="cshade" style="background:#1A0010"></div>
+        <div class="cbar" style="background:#FF69B4"></div>
+        <div class="clabel mid"><div class="cname sm" style="--c:#FF69B4">collectibles</div></div>
+        <div class="carrow sm" style="--c:#FF69B4">▶</div>
+      </div>
+      <div class="card small" data-mode="create">
+        <div class="cshade" style="background:#140022"></div>
+        <div class="cbar" style="background:#B48CFF"></div>
+        <div class="clabel mid"><div class="cname sm" style="--c:#B48CFF">✦ create your character ✦</div></div>
+        <div class="carrow sm" style="--c:#B48CFF">▶</div>
+      </div>
+      <div id="loadNote"></div>
+    </div>
+  </section>
+
+  <!-- ═════════ COLLECTIBLES ═════════ -->
+  <section id="collect" class="screen scroll hidden"></section>
+
+  <!-- ═════════ GAME ═════════ -->
+  <section id="game" class="screen hidden">
+    <div id="phaser"></div>
+
+    <!-- HUD -->
+    <div id="hud">
+      <div class="hrow"><svg class="heart" viewBox="0 0 10 10"><path d="M5 8.5C1.5 5.5-.5 2 5 3.5 10.5 2 8.5 5.5 5 8.5Z"/></svg><span class="hlabel">Height</span><svg class="heart" viewBox="0 0 10 10"><path d="M5 8.5C1.5 5.5-.5 2 5 3.5 10.5 2 8.5 5.5 5 8.5Z"/></svg></div>
+      <div id="hHeight" class="hnum">0</div>
+      <div class="hr">
+        <img id="iBook" class="hic" alt=""><span id="cBook" class="hc">0</span>
+        <img id="iCan" class="hic" alt=""><span id="cCan" class="hc">0</span>
+        <img id="iCandy" class="hic" alt=""><span id="cCandy" class="hc">0</span>
+      </div>
+      <div class="hr">
+        <img id="iDrill" class="hic" alt=""><span id="cDrill" class="hc">0</span>
+        <img id="iBunny" class="hic inv" alt=""><span id="cBunny" class="hc inv">0</span>
+        <img id="iTarot" class="hic" alt=""><span id="cTarot" class="hc">0</span>
+      </div>
+    </div>
+    <div id="pauseBtn" class="hidden"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></div>
+
+    <div id="moonGlow"></div>
+    <img id="moonHud" alt="">
+
+    <div id="digi" class="hidden"></div>
+    <div id="fx"></div>
+
+    <!-- tap-through start / ready -->
+    <div id="startOv" class="ov clear"><div class="taphint">✦ tap ✦</div></div>
+    <div id="readyOv" class="ov clear hidden"></div>
+
+    <div id="revealOv" class="ov dark hidden">
+      <div class="revealBox"><div id="revealImgWrap"><img id="revealImg" alt=""><div id="revealShine"></div></div></div>
+      <div id="revealText" class="hidden"></div>
+    </div>
+
+    <div id="moonOv" class="ov dark hidden">
+      <div id="moonOvGlow"></div>
+      <div class="revealBox"><img id="moonImg" alt=""></div>
+      <div id="moonText"></div>
+    </div>
+
+    <div id="gameOverOv" class="ov hidden">
+      <div class="revealBox"><img id="gameOverArt" src="assets/img/gameover-full.webp" alt=""></div>
+      <div id="goHeight">0</div>
+    </div>
+
+    <div id="pauseOv" class="ov hidden">
+      <div class="pauseText">the world has been paused<br>tap anywhere to resume</div>
+      <div id="menuBtn">← menu</div>
+    </div>
+  </section>
+
+  <div id="toast" class="hidden"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
+<script src="data.js"></script>
+<script src="audio.js"></script>
+<script src="ui.js"></script>
+<script src="pg_sprites.js"></script>
+<script src="pg_kit.js"></script>
+<script src="pg_avatar.js"></script>
+<script src="pg_icons.js"></script>
+<script src="pg_pop.js"></script>
+<script src="pg_hud.js"></script>
+<script src="pg_one.js"></script>
+<script src="game.js"></script>
+<script src="launcher.js"></script>
+<script src="pg_flow.js"></script>
+<script>AVATAR.ready.then(() => PGFLOW.boot());</script>
+</body>
+</html>
+
+</body></html>
