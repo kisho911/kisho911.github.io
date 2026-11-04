@@ -266,7 +266,7 @@ window.PGFLOW = (() => {
       const pr = el("div", "row");
       Object.entries(ONE.PLAT_SETS).forEach(([pid, ps]) => {
         const t = el("button", "tile" + (look.plat === pid ? " on" : ""));
-        const im = el("img"); im.src = ps.kit ? ONE.KIT.plats[ps.kit].items[0] : IMG(ps.keys[0]); t.appendChild(im);
+        const im = el("img"); im.src = ps.kit ? ONE.KIT.plats[ps.kit].items[0] : IMG(ps.files ? ps.files[0] : ps.keys[0]); t.appendChild(im);
         t.appendChild(el("div", null, ps.name)); t.onclick = () => { look.plat = pid; render(); }; pr.appendChild(t);
       });
       pad.appendChild(pr);

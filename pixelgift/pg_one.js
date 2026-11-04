@@ -23,6 +23,10 @@ window.PGONE = (() => {
     coral: { name: "Coral zodiac", keys: Array.from({ length: 13 }, (_, i) => "platform_" + i + "_coral") },
     glyph: { name: "Planet glyphs", keys: Array.from({ length: 9 }, (_, i) => "spaceplat" + (i + 1)) },
   };
+  // new Gemini platform sets (files in assets/img/plat_<set>_<n>.webp, framed like platform0)
+  [["sakura", "Sakura grove"], ["candy", "Sweet treats"], ["reef", "Crystal reef"], ["snow", "Snowy ice"]].forEach(([id, name]) => {
+    PLAT_SETS[id] = { name, keys: Array.from({ length: 6 }, (_, i) => "plat-" + id + "-" + i), files: Array.from({ length: 6 }, (_, i) => "plat_" + id + "_" + i) };
+  });
   const KIT = window.PG_KIT || { plats: {}, skies: {} };
   if (KIT.plats.clouds) PLAT_SETS.clouds = { name: "Cloud zodiac", keys: KIT.plats.clouds.items.map((_, i) => "kit-clouds-" + i), kit: "clouds" };
   const SKIES = {
@@ -39,6 +43,7 @@ window.PGONE = (() => {
   function preload(scene) {
     if (KIT.plats.clouds) KIT.plats.clouds.items.forEach((src, i) => scene.load.image("kit-clouds-" + i, src));
     scene.load.image("kit-sky-galaxy", "bg_space_0.webp");
+    Object.values(PLAT_SETS).forEach((ps) => { if (ps.files) ps.files.forEach((f, i) => scene.load.image(ps.keys[i], f + ".webp")); });
     Object.values(SKIES).forEach((sk) => { if (sk.load) scene.load.image(sk.key, sk.file + ".webp"); });
   }
 
