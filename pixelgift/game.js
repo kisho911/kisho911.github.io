@@ -235,7 +235,7 @@ window.RUXI = (() => {
     }
     updatePoseFromVelocity();
 
-    if ((S.currentLevel === 1 || S.currentLevel === 2) && S.running && S.gameplayStarted && !isAnyOverlayVisible() && !S.pendingMoonEnding) {
+    if (!window.PGPUBLIC && (S.currentLevel === 1 || S.currentLevel === 2) && S.running && S.gameplayStarted && !isAnyOverlayVisible() && !S.pendingMoonEnding) {
       S.moonTimerMs -= tickMs * (S.isCursedRun ? 1.25 : 1.0);
       if (S.moonTimerMs <= 0) { triggerMoonFail(); return; }
     }
@@ -1440,9 +1440,11 @@ window.RUXI = (() => {
     if (window.PGPUBLIC) { $("cDrill").classList.add("hidden"); $("iDrill").classList.add("hidden"); }
   }
   function createMoonPhaseHud() {
+    if (window.PGPUBLIC) { $("moonHud").classList.add("hidden"); $("moonGlow").classList.add("hidden"); return; }
     const mv = $("moonHud"); mv.src = MOON_PHASE_RES[0]; mv.classList.remove("hidden"); $("moonGlow").classList.remove("hidden");
   }
   function updateMoonPhaseHud() {
+    if (window.PGPUBLIC) { $("moonHud").classList.add("hidden"); $("moonGlow").classList.add("hidden"); return; }   // gifts: no timer
     if (!vis("moonOv") && !vis("gameOverOv")) { $("moonHud").classList.remove("hidden"); $("moonGlow").classList.remove("hidden"); }
     let pIdx;
     if (S.currentLevel === 3) {
